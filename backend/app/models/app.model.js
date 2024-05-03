@@ -21,5 +21,5 @@ db.mongoose = mongoose;
 db.url = process.env.DATABASE_ACCESS || dbConfig.url;
 
 db.userModel = require('./user.model');
-db.resultModel = require('./result.model');
+// db.resultModel = require('./result.model');
 module.exports = db;
