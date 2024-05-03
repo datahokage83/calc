@@ -10,7 +10,7 @@ export default function Dashboard() {
     console.log({login: status}, {token})
 
     try {
-      const req = await fetch('http://localhost:5000/api/user', 
+      const req = await fetch('https://calculator-f1l7.onrender.com/api/user', 
         {
           method: 'POST',
           headers: {
