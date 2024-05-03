@@ -16,7 +16,7 @@ export default function Register() {
     e.preventDefault()
 
     try {
-      const user =  await axios.post('http://localhost:5000/api/register',{
+      const user =  await axios.post('https://calculator-f1l7.onrender.com/api/register',{
         username: username,
         email: email,
         password: password
