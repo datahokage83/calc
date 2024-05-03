@@ -20,10 +20,10 @@ export default function Login() {
       if (response.data.status === 'ok') {
         console.log(response.data)
         localStorage.setItem('token', response.data.user)
-        alert('Login berhasil')
+        alert('Login Successful')
         window.location.href = '/dashboard'
       } else {
-        alert('Email atau Password Salah')
+        alert('Email or Password wrongly entered')
       }
     } catch (error) {
       console.log(error)
@@ -45,8 +45,8 @@ export default function Login() {
                     <input value={email} onChange={(e) => setEmail(e.target.value)} type="text" className="form-control" id='email' placeholder='Email' required />
                   </div>
                   <div className="mb-4">
-                    <label htmlFor="password" className="form-label">Kata Sandi</label>
-                    <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" className="form-control" id='password' placeholder='Kata Sandi' required />
+                    <label htmlFor="password" className="form-label">Password</label>
+                    <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" className="form-control" id='password' placeholder='password' required />
                   </div>
                   <div>
                     <button type="submit" className="btn btn-primary btn-block">Sign In</button>

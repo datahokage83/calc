@@ -25,7 +25,7 @@ export default function Register() {
       console.log(user)
 
       if (user.data.status === 'ok') {
-        alert('Berhasil mendaftar')
+        alert('Successfully registered')
         navigate('/login')
       } else {
         alert(user.data.error)
@@ -48,16 +48,16 @@ export default function Register() {
               <div className="card-body">
                 <form>
                   <div className="mb-4">
-                    <label htmlFor="username" className="form-label">Nama Lengkap</label>
-                    <input value={username} onChange={(e) => setUsername(e.target.value)} type="text" className="form-control" id='username' placeholder='Nama Lengkap' required />
+                    <label htmlFor="username" className="form-label">Enter your Name</label>
+                    <input value={username} onChange={(e) => setUsername(e.target.value)} type="text" className="form-control" id='username' placeholder='Name' required />
                   </div>
                   <div className="mb-4">
-                    <label htmlFor="email" className="form-label">Email</label>
+                    <label htmlFor="email" className="form-label">Enter your Email</label>
                     <input value={email} onChange={(e) => setEmail(e.target.value)} type="text" className="form-control" id='email' placeholder='Email' required />
                   </div>
                   <div className="mb-4">
-                    <label htmlFor="password" className="form-label">Kata Sandi</label>
-                    <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" className="form-control" id='password' placeholder='Kata Sandi' required />
+                    <label htmlFor="password" className="form-label">Enter your password</label>
+                    <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" className="form-control" id='password' placeholder='password' required />
                   </div>
                   <div>
                     <button type="submit" className="btn btn-primary btn-block" onClick={register}>Sign Up</button>

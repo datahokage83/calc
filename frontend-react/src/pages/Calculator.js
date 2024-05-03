@@ -1,150 +1,105 @@
-import React, { useState } from 'react'
-import './Calculator.css'
+
+
+import React, { useState } from 'react';
+import './Calculator.css';
 
 export default function Calculator() {
+    const [calc, setCalc] = useState('');
+    const [result, setResult] = useState('');
+    const [history, setHistory] = useState([]);
 
-    const [calc, setCalc] = useState("")
-    const [result, setResult] = useState("")
-    const [counted, setCounted] = useState("")
+    const ops = ['/', '*', '+', '-'];
 
-    const ops = ['/','*','+','-','.']
-
-    const updateCalc = value => {
-        if ( 
-            (ops.includes(value) && calc === '') || 
+    const updateCalc = (value) => {
+        if (
+            (ops.includes(value) && calc === '') ||
             (ops.includes(value) && ops.includes(calc.slice(-1)))
-            ) return
+        ) {
+            return;
+        }
 
-        setCalc(calc + value)
+        setCalc((prevCalc) => prevCalc + value);
 
         if (!ops.includes(value)) {
-            setResult(eval(calc + value).toString())
+            try {
+                setResult(eval(calc + value).toString());
+            } catch (error) {
+                setResult('Error');
+            }
         }
-    }
+
+    };
 
     const createDigits = () => {
-        const digits = []
+        const digits = [];
 
         for (let i = 1; i < 10; i++) {
             digits.push(
-                <button onClick={() => updateCalc(i.toString())}  key={i}>{i}</button>
-            )
+                <button key={i} onClick={() => updateCalc(i.toString())}>
+                    {i}
+                </button>
+            );
         }
 
-        return digits
-    }
+        return digits;
+    };
+
 
     const calculate = () => {
-        setCalc(eval(calc).toString())
-        setCounted(terbilang(eval(calc)))
+        try {
+            const newResult = eval(calc).toString();
+            setCalc(newResult);
+            setResult('');
+            setHistory((prevHistory) => [...prevHistory, calc + '=' + newResult]);
+        } catch (error) {
+            setResult('Error');
+        }
 
-    }
+    };
 
     const deleteLast = () => {
-        if (calc === '') return
-
-        const value = calc.slice(0, -1)
-
-        setCalc(value)
-    }
-    
-    function terbilang(nilai) {
-        let bilangan= nilai.toString();
-        let kalimat = "";
-        let angka   = ['0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'];
-        let kata    = ['','Satu','Dua','Tiga','Empat','Lima','Enam','Tujuh','Delapan','Sembilan'];
-        let tingkat = ['','Ribu','Juta','Milyar','Triliun'];
-        let panjang_bilangan = bilangan.length;
-        
-        if(panjang_bilangan > 15){
-            kalimat = "Diluar Batas";
-        }else{  
-
-            for(let i = 1; i <= panjang_bilangan; i++) {
-                angka[i] = bilangan.substr(-(i),1);
-            }
-            
-            let i = 1;
-            let j = 0;
-            
-            while(i <= panjang_bilangan){
-                let subkalimat = "";
-                let kata1 = "";
-                let kata2 = "";
-                let kata3 = "";
-                
-                if(angka[i+2] !== "0"){
-                    if(angka[i+2] === "1"){
-                        kata1 = "Seratus";
-                    }else{
-                        kata1 = kata[angka[i+2]] + " Ratus";
-                    }
-                }
-                
-                if(angka[i+1] !== "0"){
-                    if(angka[i+1] === "1"){
-                        if(angka[i] === "0"){
-                            kata2 = "Sepuluh";
-                        }else if(angka[i] === "1"){
-                            kata2 = "Sebelas";
-                        }else{
-                            kata2 = kata[angka[i]] + " Belas";
-                        }
-                    }else{
-                        kata2 = kata[angka[i+1]] + " Puluh";
-                    }
-                }
-                
-                if (angka[i] !== "0"){
-                    if (angka[i+1] !== "1"){
-                        kata3 = kata[angka[i]];
-                    }
-                }
-                
-                if ((angka[i] !== "0") || (angka[i+1] !== "0") || (angka[i+2] !== "0")){
-                    subkalimat = kata1+" "+kata2+" "+kata3+" "+tingkat[j]+" ";
-                }
-                
-                kalimat = subkalimat + kalimat;
-                i = i + 3;
-                j = j + 1;
-            }
-            
-            if ((angka[5] === "0") && (angka[6] === "0")){
-                kalimat = kalimat.replace("Satu Ribu","Seribu");
-            }
+        if (calc === '') {
+            // If calc is empty, reset both calc and result
+            setCalc('');
+            setResult('');
+        } else {
+            // Otherwise, remove the last character from calc
+            const value = calc.slice(0, -1);
+            setCalc(value);
         }
-        return kalimat + 'Rupiah'
-    }
+
+    };
 
     return (
-        <div className="app">
-            <div className="calculator">
-                <div className="display">
-                    { result ? <span>{result}</span> : ''} { calc || '0'}
-                </div>
-                <div className="display-text">
-                    { result ? counted : ''}
-                     {/* Seratus Ribu Rupiah  */}
-                </div>
-                
-                <div className="operators">
-                    <button onClick={() => updateCalc('/')} >/</button>
-                    <button onClick={() => updateCalc('*')} >*</button>
-                    <button onClick={() => updateCalc('+')} >+</button>
-                    <button onClick={() => updateCalc('-')} >-</button>
-                    
-                    <button onClick={deleteLast}>DEL</button>
-                </div>
-                
-                <div className="digits">
-                    { createDigits() }
-                    <button onClick={() => updateCalc('0')} >0</button>
-                    <button onClick={() => updateCalc('.')} >.</button>
+        <div className="calculator">
+            <div className="display">
+                {result ? <span>{result}</span> : calc || '0'}
+            </div>
+            <div className="operators">
+            {ops.map((op) => (
+                    <button key={op} onClick={() => updateCalc(op)}>
+                        {op}
+                    </button>
+                ))}
+                <button onClick={deleteLast}>DEL</button>
 
-                    <button onClick={calculate}>=</button>
-                </div>
+            </div>
+            <div className="digits">
+            {createDigits()}
+                <button onClick={() => updateCalc('0')}>0</button>
+                <button onClick={() => updateCalc('.')}>.</button>
+                <button onClick={calculate}>=</button>
+
+            </div>
+            <div className="history">
+                <h3 className='h3'>History</h3>
+                <ul>
+                    {history.map((item, index) => (
+                        <li key={index}>{item}</li>
+                    ))}
+                </ul>
+
             </div>
         </div>
-    )
+    );
 }

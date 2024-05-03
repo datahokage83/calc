@@ -4,7 +4,7 @@
     padding: 16px;
     box-sizing: border-box;
     font-family: 'Fira Sans', sans-serif;
-
+    background-color: rgb(200, 182, 182);
     display: flex;
     min-height: 100vh;
     align-items: center;
@@ -14,6 +14,8 @@
 .calculator {
     width: 100%;
     max-width: 400px;
+    margin-left: 600px;
+    margin-top: 20px;
     background-color: #fff;
     border-radius: 6px;
     overflow: hidden;
@@ -76,4 +78,27 @@ button:hover {
     flex: 1 1 33.333%;
     max-width: 33.333%;
     background-color: rgb(50, 50, 50);
+}
+
+
+.history {
+    margin-top: 20px;
+    width: 400px;
+    background-color: grey;
+    border-radius: 6px;
+}
+
+.history-list {
+    list-style: none;
+    padding: 0;
+}
+
+.history-list li {
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: #5f1a1a;
+}
+
+.h3{
+    margin-left: 150px;
 }
